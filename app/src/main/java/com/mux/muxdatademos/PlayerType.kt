@@ -1,7 +1,9 @@
 package com.mux.muxdatademos
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.mux.muxdatademos.exoplayer.StaticExoPlayerFragment
 
 /**
  * Represents a player framework supported by Mux Data. Provides ViewHolders and Player Fragments
@@ -15,7 +17,9 @@ enum class PlayerType {
         }
 
         override fun createFragment(video: VideoInfo): Fragment {
-            TODO("Not yet implemented")
+            return StaticExoPlayerFragment().apply {
+                arguments = bundleOf("video_info" to video)
+            }
         }
     },
     JW {
