@@ -11,7 +11,7 @@ object MuxDataConfigs {
      * A CustomerPlayerData configured for Em's Production Environment
      */
     fun examplePlayerData() =
-        CustomerPlayerData().apply { environmentKey = BuildConfig.MUX_ENV_KEY }
+        CustomerPlayerData().apply { environmentKey = BuildConfig.MUX_DATA_ENV_KEY }
 
     /**
      * A CustomerVideoData that sets a video title but otherwise uses default values

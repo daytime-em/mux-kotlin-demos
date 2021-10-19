@@ -6,9 +6,45 @@ import android.content.pm.PackageManager
 import android.os.Environment
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.google.gson.Gson
+import com.mux.muxdatademos.backend.MuxVideoBackend
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 
 object Util {
+
+    /**
+     * A Retrofit interface that can be used for interacting with the Mux Video backend
+     */
+    val muxVideoBackend: MuxVideoBackend by lazy {
+        Retrofit.Builder()
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(muxHttpClient)
+            .build().create(MuxVideoBackend::class.java)
+    }
+
+    /**
+     * An OkHttpClient that can be used to upload videos directly. This OkHttpClient will also be
+     * used to back the Retrofit interfaces
+     */
+    val muxHttpClient: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor {
+                Log.v("MuxDataDemos", it)
+            }.apply {
+                setLevel(HttpLoggingInterceptor.Level.BODY)
+            })
+            .build()
+    }
+
+    private val gson by lazy {
+        Gson()
+    }
 
     /**
      * Gets the URL for a video to play in the example UIs

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -85,9 +86,12 @@ class MainActivity : AppCompatActivity() {
         val defaultCameraInfo = packageManager.queryIntentActivities(
             ingestVideo.contract.createIntent(this, uri),
             PackageManager.MATCH_DEFAULT_ONLY
-        ).takeIf { it.isNotEmpty() }?.get(0)!!.activityInfo
+        ).also {
+            Log.d(javaClass.simpleName, "Available Camera Apps: $it")
+        }.firstOrNull()?.activityInfo
 
         if (defaultCameraInfo == null) {
+            Log.d(javaClass.simpleName, "No Camera App was found")
             Toast.makeText(this, "No Camera App was found", Toast.LENGTH_SHORT).show()
         } else {
             viewModel.updateRecordedVideoFile(videoFile)
