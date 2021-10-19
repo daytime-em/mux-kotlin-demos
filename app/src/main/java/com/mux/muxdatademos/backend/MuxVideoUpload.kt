@@ -31,7 +31,7 @@ data class MuxVideoUpload(
     /**
      * The ID of the created asset on Mux Video. Will be non-null if the status is "asset_created"
      */
-    val assetId: String?,
+    val id: String?,
     /**
      * Arbitrary object representing an error, if one occurred while trying to create the asset
      */
@@ -40,14 +40,16 @@ data class MuxVideoUpload(
      * The origin for a videos CORS headers. Only relevant if sent from a browser
      */
     val corsOrigin: String,
-    /**
-     * True if the upload is a Test upload. Test uploads are free to store, up to 10 seconds long,
-     * and disappear after 24 hours
-     */
-    val test: Boolean,
-    )
+)
 
 data class MuxVideoUploadError(
     val type: String,
     val message: String
+)
+
+/**
+ * Wrapper for the upload response data
+ */
+data class MuxVideoUploadResponse(
+    val data: MuxVideoUpload
 )

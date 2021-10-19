@@ -13,10 +13,10 @@ interface MuxVideoBackend {
      * Creates a new Asset on the Mux backend. This does not upload the video itself. It just creates
      * a new asset and provides an authenticated URL to a resume-able upload.
      */
-    @POST("uploads")
-    @Headers("Content-Type", "application/json")
+    @POST("v1/uploads")
+    @Headers("Content-Type: application/json")
     suspend fun postUploads(
         @Header("Authorization") basicAuth: String,
-        @Body postBody: Any
-    ): VideoUploadPost
+        @Body postBody: VideoUploadPost
+    ): MuxVideoUploadResponse
 }

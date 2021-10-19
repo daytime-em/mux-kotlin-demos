@@ -31,7 +31,7 @@ data class NewAssetSettings(
      *  "signed": Signed assets require authentication by token to be streamed.
      *      (see https://docs.mux.com/api-reference/video)
      */
-    val playbackPolicy: List<String> = listOf("public"),
+    val playbackPolicy: List<String> = listOf("public", "signed"),
     /**
      * Arbitrary data that can be passed along with the asset.
      * NOTE: The backend limits the length of this string to 255 characters.
@@ -45,7 +45,7 @@ data class NewAssetSettings(
      *  "none": mp4 support disabled
      *  "standard": mp4 support enabled
      */
-    val mp4Support: String = "none",
+    val mp4Support: String = "standard",
     /**
      * Toggles audio loudness normalization for this asset as part of the transcode process
      */
@@ -55,5 +55,5 @@ data class NewAssetSettings(
      * the Mux Video APIs without incurring any cost. There is no limit on number of test assets
      * created. Test asset are watermarked with the Mux logo, limited to 10 seconds, deleted after 24 hrs.
      */
-    val test: Boolean = true,
+    val test: Boolean = false,
 )

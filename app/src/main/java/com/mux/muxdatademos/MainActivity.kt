@@ -22,7 +22,9 @@ class MainActivity : AppCompatActivity() {
 
     private val ingestVideo =
         registerForActivityResult(ActivityResultContracts.CaptureVideo()) { success ->
-            if(success) {
+            if (success) {
+                // !! safe if value was set before launching the camera app
+                Util.saveLastRecordedVideo(this, viewModel.recordedVideoFile.value!!)
                 Intent(this, IngestVideoActivity::class.java).let {
                     it.putExtra("input_file", viewModel.recordedVideoFile.value)
                     startActivity(it)
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         val viewBinding = ActivityMainBinding.inflate(layoutInflater)
 
-        // "Post New Video" link
+        // "Post New Video"/"Upload Last Video" links
         viewBinding.mainPostVideo.setOnClickListener {
             if (!Util.haveRecordVideoPermissions(this)) {
                 askForRecordPermission()
@@ -58,6 +60,14 @@ class MainActivity : AppCompatActivity() {
                 launchRecordActivity()
             }
         }
+        viewBinding.mainUploadLastVideo.setOnClickListener {
+            val videoFile = Util.loadLastRecordedVideoPath(this)
+            Intent(this, IngestVideoActivity::class.java).let {
+                it.putExtra("input_file", videoFile)
+                startActivity(it)
+            }
+        }
+        viewBinding.mainUploadLastVideo.isEnabled = Util.loadLastRecordedVideoPath(this) != null
 
         // Link/Config for Static Player Example
         val staticPlayerSpinner = viewBinding.mainStaticOptions.demoInfoStaticPlayerType

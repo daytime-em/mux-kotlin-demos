@@ -24,7 +24,17 @@
             android:id="@+id/main_post_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Post New Video"
+            android:layout_gravity="start"
+            android:text="Record New Video"
+            />
+
+        <Button
+            android:id="@+id/main_upload_last_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Upload Last Video"
+            android:enabled="false"
             />
 
         <include

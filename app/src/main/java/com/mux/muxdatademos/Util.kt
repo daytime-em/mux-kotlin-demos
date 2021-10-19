@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.mux.muxdatademos.backend.MuxVideoBackend
+import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,8 +23,9 @@ object Util {
      */
     val muxVideoBackend: MuxVideoBackend by lazy {
         Retrofit.Builder()
+            .baseUrl("https://api.mux.com/video/")
             .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(muxHttpClient)
             .build().create(MuxVideoBackend::class.java)
     }
@@ -42,9 +44,34 @@ object Util {
             .build()
     }
 
-    private val gson by lazy {
-        Gson()
+    /**
+     * Basic-Auth Credential for authorizing the Mux Video API
+     */
+    val exampleVideoCredential =
+        Credentials.basic(BuildConfig.MUX_VIDEO_TOKEN_ID, BuildConfig.MUX_VIDEO_TOKEN_SECRET)
+
+    /**
+     * Saves the URL of last-uploaded video for playback
+     */
+    fun saveLastUploadedVideo(context: Context, url: String) =
+        context.getSharedPreferences("mux-prefs.xml", 0).edit()
+            .putString("last_video_url", url).apply()
+
+    /**
+     * Saves the last-recorded video's file path to shared prefs
+     */
+    fun saveLastRecordedVideo(context: Context, videoFile: File) {
+        context.getSharedPreferences("mux-prefs.xml", 0).edit()
+            .putString("last_video_path", videoFile.absolutePath).apply()
     }
+
+    /**
+     * Loads the last-recorded video's file path from shared prefs
+     */
+    fun loadLastRecordedVideoPath(context: Context): File? =
+        context.getSharedPreferences("mux-prefs.xml", 0)
+            .getString("last_video_path", null)
+            ?.let { File(it) }
 
     /**
      * Gets the URL for a video to play in the example UIs
@@ -86,5 +113,9 @@ object Util {
         Log.d(javaClass.simpleName, "have videoRecordPermissions: storage $hasStorage")
 
         return hasCamera && hasStorage
+    }
+
+    private val gson by lazy {
+        Gson()
     }
 }
