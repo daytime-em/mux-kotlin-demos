@@ -34,9 +34,4 @@ object MuxDataConfigs {
         customData4 = "Mux"
         customData5 = "!"
     }
-
-    // TODO move somewhere else
-    fun exampleVideoInfo(): VideoInfo {
-        return VideoInfo(url = "https://mux.slack.com/files/U02H59VMPM2/F02HPLKKWKY/vid_20211014_235115.mp4")
-    }
 }

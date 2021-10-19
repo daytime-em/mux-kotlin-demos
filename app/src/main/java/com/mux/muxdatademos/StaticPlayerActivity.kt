@@ -51,7 +51,7 @@ class StaticPlayerActivity : AppCompatActivity() {
     private fun addPlayerFragment(playerType: PlayerType) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.static_player_frag_container,
-                playerType.createFragment(MuxDataConfigs.exampleVideoInfo()))
+                playerType.createFragment(Util.exampleVideoInfo()))
             .commit()
     }
 }

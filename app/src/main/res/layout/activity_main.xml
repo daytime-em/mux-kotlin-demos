@@ -13,6 +13,20 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_gravity="start"
+            android:background="?colorAccent"
+            />
+
+        <Button
+            android:id="@+id/main_post_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Post New Video"
+            />
+
         <include
             android:id="@+id/main_static_options"
             layout="@layout/include_demo_info_static"
