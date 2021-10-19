@@ -9,10 +9,6 @@ import com.mux.muxdatademos.databinding.ActivityStaticPlayerBinding
 
 class StaticPlayerActivity : AppCompatActivity() {
 
-    companion object {
-        const val PLAYER_FRAGMENT_TAG = "player_fragment"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewBinding = ActivityStaticPlayerBinding.inflate(layoutInflater)

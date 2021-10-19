@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.mux.muxdatademos.databinding.ActivityMainBinding
+import com.mux.muxdatademos.ingest.IngestVideoActivity
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -20,13 +20,19 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel>()
 
     private val ingestVideo =
-        registerForActivityResult(ActivityResultContracts.TakeVideo()) { bitmap ->
-            Log.d(javaClass.simpleName, "Recorded Video Successfully")
-            Log.d(javaClass.simpleName, "Recorded Video at ${viewModel.recordedVideoFile.value}")
-            Log.d(javaClass.simpleName, "   Exists? ${viewModel.recordedVideoFile.value?.exists()}")
+        registerForActivityResult(ActivityResultContracts.CaptureVideo()) { success ->
+            if(success) {
+                Intent(this, IngestVideoActivity::class.java).let {
+                    it.putExtra("input_file", viewModel.recordedVideoFile.value)
+                    startActivity(it)
+                }
+            } else {
+                Toast.makeText(this, "Video file not found", Toast.LENGTH_SHORT).show()
+            }
         }
 
-    // In order for files to appear in the user's gallery,
+    // In order to record via the Camera app, we must have the Camera permission
+    // In order for files to appear in the user's gallery, External Storage is required
     // TODO: Give advice about how it might be hard to use ActivityResultContract.TakeVideo
     //  with internal storage, due to the URI permissions not being accessible (if true)
     //  (see other notes in Util.kt)
@@ -34,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { grantedPermission ->
             val missedPermission = grantedPermission.values.contains(false)
             if (missedPermission) {
-                askForStoragePermission()
+                askForRecordPermission()
             }
         }
 
@@ -46,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         // "Post New Video" link
         viewBinding.mainPostVideo.setOnClickListener {
             if (!Util.haveRecordVideoPermissions(this)) {
-                askForStoragePermission()
+                askForRecordPermission()
             } else {
                 launchRecordActivity()
             }
@@ -95,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun askForStoragePermission() {
+    private fun askForRecordPermission() {
         Toast.makeText(
             this, "External Storage Permission is required for video" +
                     " recording/upload", Toast.LENGTH_LONG
