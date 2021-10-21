@@ -21,7 +21,7 @@ class IngestVideoActivity : AppCompatActivity() {
         viewModel.state.observe(this) { state ->
             Log.d(javaClass.simpleName, "Moving to state $state")
             when (state) {
-                IngestVideoViewModel.State.CREATING_ASSET -> {
+                IngestVideoViewModel.State.CREATING_UPLOAD -> {
                     viewBinding.ingestVideoIndProgress.visibility = View.VISIBLE
                     viewBinding.ingestVideoState.text = "Creating Asset"
                 }
@@ -33,7 +33,13 @@ class IngestVideoActivity : AppCompatActivity() {
                     viewBinding.ingestVideoIndProgress.visibility = View.GONE
                     viewBinding.ingestVideoState.text = "Done!"
 
-                    //TODO: Show Thumbnail or enable player
+                    //TODO: Show Thumbnail or enable "go to player"
+                }
+                IngestVideoViewModel.State.AWAITING_PROCESSING -> {
+                    viewBinding.ingestVideoState.text = "Awaiting Processing"
+                }
+                IngestVideoViewModel.State.CREATING_PLAYBACK_ID -> {
+                    viewBinding.ingestVideoState.text = "Creating Playback ID"
                 }
                 IngestVideoViewModel.State.ERROR -> {
                     Toast.makeText(this, "Error uploading video. Check the logs", Toast.LENGTH_LONG)

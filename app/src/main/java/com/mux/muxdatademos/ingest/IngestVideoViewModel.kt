@@ -7,18 +7,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mux.muxdatademos.Util
 import com.mux.muxdatademos.asCountingFileBody
+import com.mux.muxdatademos.backend.MuxVideoUploadResponse
 import com.mux.muxdatademos.backend.VideoUploadPost
 import kotlinx.coroutines.*
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.lang.Exception
 import java.util.concurrent.atomic.AtomicReference
 
 /**
  * Uploads a video to Mux Video, creating an asset.
  */
 class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
+
+    companion object {
+        const val POLL_DELAY_MS = 500L
+    }
 
     val state: LiveData<State> get() = _state
     private val _state = stateHandle.getLiveData<State>("state")
@@ -65,12 +69,20 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
 
     private suspend fun doUpload(videoFile: File) {
         // Create the Asset to which we'll be uploading our video
-        _state.postValue(State.CREATING_ASSET)
+        _state.postValue(State.CREATING_UPLOAD)
         val destinationData = createUpload()
 
         // Upload to the provided URL
         _state.postValue(State.UPLOADING)
         uploadFile(destinationData.data.url, videoFile)
+
+        // Await processing in order to obtain an asset ID
+        _state.postValue(State.AWAITING_PROCESSING)
+        val assetId = awaitAssetId(destinationData.data.id)
+        Log.d(javaClass.simpleName, "Got asset ID $assetId")
+
+        // Create a Playback ID for the new asset, allowing it to be played
+
 
         // Done! Reset the state
         _state.postValue(State.DONE)
@@ -90,7 +102,6 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
 
         val fileBody = videoFile.asCountingFileBody("application/mp4") { totalWrittenBytes ->
             _uploadProgress.postValue(totalWrittenBytes.toInt() to contentLength().toInt())
-
         }
 
         Log.d(javaClass.simpleName, "uploadFile(): Uploading ${fileBody.contentLength()} bytes")
@@ -110,10 +121,42 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
         }
     }
 
+    private suspend fun awaitAssetId(uploadId: String): String {
+        // For brevity this example simply polls the GET/uploads API at regular intervals
+        while (true) {
+            delay(POLL_DELAY_MS)
+            val uploadData = Util.muxVideoBackend.getUpload(Util.exampleVideoCredential, uploadId)
+            Log.d(javaClass.simpleName, "Polled for upload data $uploadData")
+            when(uploadData.data.status) {
+                "errored" -> {
+                    Log.e(javaClass.simpleName, "Processing error for uploadId $uploadId")
+                    throw Exception("Processing error for uploadId $uploadId")
+                }
+                "cancelled" -> {
+                    Log.e(javaClass.simpleName, "uploadId $uploadId Canceled")
+                    throw Exception("uploadId $uploadId Canceled")
+                }
+                "timed_out" -> {
+                    Log.e(javaClass.simpleName, "uploadId $uploadId Timed Out")
+                    throw Exception("uploadId $uploadId Timed Out")
+                }
+                "asset_created" -> {
+                    val assetId = uploadData.data.assetId
+                    Log.e(javaClass.simpleName, "Asset $assetId created for uploadId $uploadId")
+                    // The asset ID should be present at this point, making this !! safe
+                    return assetId!!
+                }
+                else -> Log.d(javaClass.simpleName, "Still awaiting asset ID for $uploadId")
+            }
+        }
+    }
+
     enum class State {
         IDLE,
-        CREATING_ASSET,
+        CREATING_UPLOAD,
         UPLOADING,
+        AWAITING_PROCESSING,
+        CREATING_PLAYBACK_ID,
         DONE,
         ERROR
     }

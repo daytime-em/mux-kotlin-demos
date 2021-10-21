@@ -11,6 +11,10 @@ data class MuxVideoUpload(
      */
     val url: String,
     /**
+     * ID of the Asset
+     */
+    val assetId: String?,
+    /**
      * Timeout (in seconds) before this upload link times out
      */
     val timeout: Long?,
@@ -31,7 +35,7 @@ data class MuxVideoUpload(
     /**
      * The ID of the created asset on Mux Video. Will be non-null if the status is "asset_created"
      */
-    val id: String?,
+    val id: String,
     /**
      * Arbitrary object representing an error, if one occurred while trying to create the asset
      */
