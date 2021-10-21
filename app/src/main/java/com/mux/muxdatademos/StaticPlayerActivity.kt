@@ -9,6 +9,8 @@ import com.mux.muxdatademos.databinding.ActivityStaticPlayerBinding
 
 class StaticPlayerActivity : AppCompatActivity() {
 
+    private val videoInfo: VideoInfo? = intent?.getParcelableExtra("video_info")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewBinding = ActivityStaticPlayerBinding.inflate(layoutInflater)
@@ -47,7 +49,7 @@ class StaticPlayerActivity : AppCompatActivity() {
     private fun addPlayerFragment(playerType: PlayerType) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.static_player_frag_container,
-                playerType.createFragment(Util.exampleVideoInfo()))
+                playerType.createFragment(videoInfo))
             .commit()
     }
 }

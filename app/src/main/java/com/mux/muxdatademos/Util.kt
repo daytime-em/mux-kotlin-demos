@@ -7,8 +7,6 @@ import android.os.Environment
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.gson.FieldNamingPolicy
-import com.google.gson.FieldNamingStrategy
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mux.muxdatademos.backend.MuxVideoBackend
 import okhttp3.Credentials
@@ -58,7 +56,7 @@ object Util {
      *
      * see MuxVideoBackend for more information about assets and playback IDs
      */
-    fun createHlsUrl(playbackId: String) = "https://stream.mux.com/$playbackId.m3u8"
+    fun createMuxHlsUrl(playbackId: String) = "https://stream.mux.com/$playbackId.m3u8"
 
     /**
      * Saves the URL of last-uploaded video for playback
@@ -82,13 +80,6 @@ object Util {
         context.getSharedPreferences("mux-prefs.xml", 0)
             .getString("last_video_path", null)
             ?.let { File(it) }
-
-    /**
-     * Gets the URL for a video to play in the example UIs
-     */
-    fun exampleVideoInfo(): VideoInfo {
-        return VideoInfo(url = "https://mux.slack.com/files/U02H59VMPM2/F02HPLKKWKY/vid_20211014_235115.mp4")
-    }
 
     /**
      * Gets the directory where recorded/saved video files are stored. The file is on the device's

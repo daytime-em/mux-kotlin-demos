@@ -163,11 +163,13 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
     private suspend fun createPlaybackId(assetId: String): String {
         val playbackIdData = Util.muxVideoBackend.createPlaybackId(
             assetId = assetId,
-            playbackPolicy = MuxPlaybackPolicy()
+            playbackPolicy = MuxPlaybackPolicy(
+                policy = "public"
+            )
         )
 
         Log.d(javaClass.simpleName, "Playback ID created: $playbackIdData")
-        return playbackIdData.id
+        return playbackIdData.data.id
     }
 
     enum class State {

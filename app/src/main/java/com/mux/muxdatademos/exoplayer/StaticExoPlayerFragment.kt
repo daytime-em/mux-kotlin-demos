@@ -4,6 +4,7 @@ import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -15,7 +16,6 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.mux.muxdatademos.MuxDataConfigs
-import com.mux.muxdatademos.VideoInfo
 import com.mux.muxdatademos.databinding.FragmentStaticExoplayerBinding
 import com.mux.stats.sdk.core.model.CustomerData
 import com.mux.stats.sdk.muxstats.MuxStatsExoPlayer
@@ -29,7 +29,7 @@ class StaticExoPlayerFragment : Fragment() {
     private var exoPlayer: SimpleExoPlayer? = null
     private var muxStats: MuxStatsExoPlayer? = null
 
-    private val videoInfo: VideoInfo get() = requireArguments().getParcelable("video_info")!!
+    private val videoUrl: String get() = requireArguments().getString("video_url")!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,8 +45,11 @@ class StaticExoPlayerFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        disposePlayer()
         exoPlayer = createPlayer()
-        val mediaItem = MediaItem.fromUri(videoInfo.url)
+        Log.d(javaClass.simpleName, "Playing Video at $videoUrl")
+        val mediaItem = MediaItem.fromUri(videoUrl)
+        playerView.player = exoPlayer
         exoPlayer?.setMediaItem(mediaItem)
         // create your MuxStatsExoPlayer instance before calling prepare() on your ExoPlayer
         muxStats = createMuxStats(exoPlayer!!)
@@ -63,15 +66,14 @@ class StaticExoPlayerFragment : Fragment() {
     }
 
     override fun onPause() {
-        exoPlayer?.release()
-        exoPlayer = null
-        muxStats?.release()
-        muxStats = null
+        disposePlayer()
 
         super.onPause()
     }
 
     private fun createMuxStats(player: SimpleExoPlayer): MuxStatsExoPlayer {
+        // A SimpleExoPlayer is not strictly required, but if your ExoPlayer is a SimpleExoPlayer,
+        //  additional metrics can be collected
         return MuxStatsExoPlayer(
             requireContext(),
             player,
@@ -87,7 +89,6 @@ class StaticExoPlayerFragment : Fragment() {
 
     private fun createPlayer(): SimpleExoPlayer {
         return SimpleExoPlayer.Builder(requireContext())
-            .setVideoScalingMode(VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
             .build().apply {
                 addListener(object : Player.Listener {
                     override fun onPlayerError(error: ExoPlaybackException) {
@@ -100,5 +101,13 @@ class StaticExoPlayerFragment : Fragment() {
                     }
                 })
             }
+    }
+
+    private fun disposePlayer() {
+        playerView.player = null
+        exoPlayer?.release()
+        exoPlayer = null
+        muxStats?.release()
+        muxStats = null
     }
 }

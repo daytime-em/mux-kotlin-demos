@@ -36,5 +36,5 @@ interface MuxVideoBackend {
         @Header("Authorization") basicAuth: String = Util.exampleVideoCredential,
         @Path("assetId") assetId: String,
         @Body playbackPolicy: MuxPlaybackPolicy
-    ): MuxPlaybackIdData
+    ): MuxPlaybackId
 }

@@ -11,7 +11,7 @@ data class MuxPlaybackIdData(
     /**
      * Playback policy for the asset
      * Possible Values:
-     * "pubilc"
+     * "public"
      * "signed"
      */
     val policy: String,

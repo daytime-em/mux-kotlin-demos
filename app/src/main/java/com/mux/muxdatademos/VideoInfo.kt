@@ -11,5 +11,5 @@ data class VideoInfo(
     /**
      * URL of the video to be played
      */
-    val url: String
+    val id: String
 ) : Parcelable
