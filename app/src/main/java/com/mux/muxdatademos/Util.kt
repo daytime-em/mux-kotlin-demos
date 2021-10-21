@@ -6,7 +6,10 @@ import android.content.pm.PackageManager
 import android.os.Environment
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.FieldNamingStrategy
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.mux.muxdatademos.backend.MuxVideoBackend
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
@@ -49,6 +52,13 @@ object Util {
      */
     val exampleVideoCredential =
         Credentials.basic(BuildConfig.MUX_VIDEO_TOKEN_ID, BuildConfig.MUX_VIDEO_TOKEN_SECRET)
+
+    /**
+     * Create a URL for HLS Playback based on the given playback ID
+     *
+     * see MuxVideoBackend for more information about assets and playback IDs
+     */
+    fun createHlsUrl(playbackId: String) = "https://stream.mux.com/$playbackId.m3u8"
 
     /**
      * Saves the URL of last-uploaded video for playback
@@ -116,6 +126,8 @@ object Util {
     }
 
     private val gson by lazy {
-        Gson()
+        GsonBuilder()
+            .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create()
     }
 }

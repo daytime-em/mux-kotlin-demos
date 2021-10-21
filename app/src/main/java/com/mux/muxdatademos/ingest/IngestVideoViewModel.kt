@@ -7,16 +7,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mux.muxdatademos.Util
 import com.mux.muxdatademos.asCountingFileBody
-import com.mux.muxdatademos.backend.MuxVideoUploadResponse
+import com.mux.muxdatademos.backend.MuxPlaybackPolicy
 import com.mux.muxdatademos.backend.VideoUploadPost
 import kotlinx.coroutines.*
 import okhttp3.Request
 import java.io.File
-import java.lang.Exception
 import java.util.concurrent.atomic.AtomicReference
 
 /**
  * Uploads a video to Mux Video, creating an asset.
+ *
+ * For brevity all logic for ingesting and publishing videos is contained here. We recommend using a
+ * Service in your application if your users want to leave the screen while the upload completes.
  */
 class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
 
@@ -33,6 +35,12 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
      */
     val uploadProgress: LiveData<Pair<Int, Int>> get() = _uploadProgress
     private val _uploadProgress = stateHandle.getLiveData<Pair<Int, Int>>("upload_bytes")
+
+    /**
+     * Playback ID of a completed upload. This ID is used to create the URL to the video for playback
+     */
+    val playbackId: LiveData<String> get() = _playbackId
+    private val _playbackId = stateHandle.getLiveData<String>("playback_id")
     private val _thumbnailUrl = stateHandle.getLiveData<String>("thumbnail_url")
 
     private val uploadJob = AtomicReference<Job?>()
@@ -82,17 +90,18 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
         Log.d(javaClass.simpleName, "Got asset ID $assetId")
 
         // Create a Playback ID for the new asset, allowing it to be played
-
+        _state.postValue(State.CREATING_PLAYBACK_ID)
+        val playbackId = createPlaybackId(assetId)
 
         // Done! Reset the state
         _state.postValue(State.DONE)
+        _playbackId.postValue(playbackId)
         uploadJob.set(null)
     }
 
     private suspend fun createUpload() =
         Util.muxVideoBackend.postUploads(
-            Util.exampleVideoCredential,
-            VideoUploadPost()
+            postBody = VideoUploadPost()
         ).also {
             Log.d(javaClass.simpleName, "Created Upload: $it")
         }
@@ -125,7 +134,7 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
         // For brevity this example simply polls the GET/uploads API at regular intervals
         while (true) {
             delay(POLL_DELAY_MS)
-            val uploadData = Util.muxVideoBackend.getUpload(Util.exampleVideoCredential, uploadId)
+            val uploadData = Util.muxVideoBackend.getUpload(uploadId = uploadId)
             Log.d(javaClass.simpleName, "Polled for upload data $uploadData")
             when(uploadData.data.status) {
                 "errored" -> {
@@ -149,6 +158,16 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
                 else -> Log.d(javaClass.simpleName, "Still awaiting asset ID for $uploadId")
             }
         }
+    }
+
+    private suspend fun createPlaybackId(assetId: String): String {
+        val playbackIdData = Util.muxVideoBackend.createPlaybackId(
+            assetId = assetId,
+            playbackPolicy = MuxPlaybackPolicy()
+        )
+
+        Log.d(javaClass.simpleName, "Playback ID created: $playbackIdData")
+        return playbackIdData.id
     }
 
     enum class State {

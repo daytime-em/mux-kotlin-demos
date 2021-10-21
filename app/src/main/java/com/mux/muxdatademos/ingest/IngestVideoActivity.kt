@@ -56,6 +56,13 @@ class IngestVideoActivity : AppCompatActivity() {
             viewBinding.ingestVideoUploadProgress.progress = it.first
             viewBinding.ingestVideoUploadProgress.max = it.second
         }
+        viewModel.playbackId.observe(this) {
+            viewBinding.ingestVideoPlaybackId.text = it
+            viewBinding.ingestVideoPlay.isEnabled = true
+            viewBinding.ingestVideoPlay.setOnClickListener {
+                // TODO: Show the player!!
+            }
+        }
 
         setContentView(viewBinding.root)
     }

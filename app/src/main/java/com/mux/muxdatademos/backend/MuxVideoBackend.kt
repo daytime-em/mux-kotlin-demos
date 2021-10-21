@@ -1,5 +1,6 @@
 package com.mux.muxdatademos.backend
 
+import com.mux.muxdatademos.Util
 import retrofit2.http.*
 
 /**
@@ -15,7 +16,7 @@ interface MuxVideoBackend {
     @POST("v1/uploads")
     @Headers("Content-Type: application/json")
     suspend fun postUploads(
-        @Header("Authorization") basicAuth: String,
+        @Header("Authorization") basicAuth: String = Util.exampleVideoCredential,
         @Body postBody: VideoUploadPost
     ): MuxVideoUploadResponse
 
@@ -26,7 +27,14 @@ interface MuxVideoBackend {
      */
     @GET("v1/uploads/{uploadId}")
     suspend fun getUpload(
-        @Header("Authorization") basicAuth: String,
+        @Header("Authorization") basicAuth: String = Util.exampleVideoCredential,
         @Path("uploadId") uploadId: String
     ): MuxVideoUploadResponse
+
+    @POST("v1/assets/{assetId}/playback-ids ")
+    suspend fun createPlaybackId(
+        @Header("Authorization") basicAuth: String = Util.exampleVideoCredential,
+        @Path("assetId") assetId: String,
+        @Body playbackPolicy: MuxPlaybackPolicy
+    ): MuxPlaybackIdData
 }

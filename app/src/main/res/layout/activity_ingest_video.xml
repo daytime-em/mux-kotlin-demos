@@ -40,11 +40,29 @@
         android:layout_margin="12dp"
         />
 
+    <TextView
+        android:id="@+id/ingest_video_playback_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+        android:layout_margin="12dp"
+        />
+
     <ProgressBar
         android:id="@+id/ingest_video_upload_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        />
+
+    <Button
+        android:id="@+id/ingest_video_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play with HLS"
+        android:enabled="false"
         />
 
 </LinearLayout>
