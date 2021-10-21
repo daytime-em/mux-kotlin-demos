@@ -7,16 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.IdRes
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.mux.muxplayback.MuxDataConfigs
+import com.mux.muxplayback.BuildConfig
 import com.mux.muxplayback.databinding.FragmentStaticExoplayerBinding
-import com.mux.stats.sdk.core.model.CustomerData
+import com.mux.stats.sdk.core.model.*
 import com.mux.stats.sdk.muxstats.MuxStatsExoPlayer
+import java.util.*
 
 /**
  * Shows a video specified by its URL, reporting playback statistics to Mux Data.
@@ -28,6 +32,21 @@ class StaticExoPlayerFragment : Fragment() {
     private var muxStats: MuxStatsExoPlayer? = null
 
     private val videoUrl: String get() = requireArguments().getString("video_url")!!
+
+    companion object {
+        fun addIfNotAdded(activity: FragmentActivity, @IdRes containerId: Int, videoUrl: String) {
+            if (activity.supportFragmentManager.findFragmentById(containerId) == null) {
+                activity.supportFragmentManager.beginTransaction()
+                    .add(
+                        containerId,
+                        StaticExoPlayerFragment().apply {
+                            arguments = bundleOf("video_url" to videoUrl)
+                        },
+                    )
+                    .commit()
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,10 +96,28 @@ class StaticExoPlayerFragment : Fragment() {
             player,
             "mux_data_android_demo",
             CustomerData().apply {
-                customerPlayerData = MuxDataConfigs.examplePlayerData()
-                customerVideoData = MuxDataConfigs.exampleVideoData()
-                customerViewData = MuxDataConfigs.exampleViewData()
-                customData = MuxDataConfigs.exampleCustomData()
+                customerPlayerData = CustomerPlayerData().apply {
+                    // Add or change properties here to customize player metadata such as ad configs,
+                    //  experiments, etc
+                    environmentKey = BuildConfig.MUX_DATA_ENV_KEY
+                }
+                customerVideoData = CustomerVideoData().apply {
+                    // Add or change properties here to customize video metadata such as title,
+                    //   language, etc
+                    videoTitle = "Mux ExoPlayer Android Example"
+                }
+                customerViewData = CustomerViewData().apply {
+                    // A a unique identifier for this View event
+                    viewSessionId = UUID.randomUUID().toString()
+                }
+                customData = CustomData().apply {
+                    // Add values for your Custom Dimensions. Up to 5 strings can be set
+                    customData1 = "Hello"
+                    customData2 = "World"
+                    customData3 = "From"
+                    customData4 = "Mux"
+                    customData5 = "!"
+                }
             }
         )
     }

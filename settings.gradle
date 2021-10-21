@@ -10,6 +10,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "MuxDataDemos"
-include ':app'
+include ':MuxExoPlayerDemo'
 include ':MuxVideoCommon'
-include ':muxuploaddemo'
+include ':MuxUploadDemo'

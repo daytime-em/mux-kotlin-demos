@@ -19,38 +19,6 @@ import java.io.File
 object Util {
 
     /**
-     * A Retrofit interface that can be used for interacting with the Mux Video backend
-     */
-    val muxVideoBackend: MuxVideoBackend by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://api.mux.com/video/")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(muxHttpClient)
-            .build().create(MuxVideoBackend::class.java)
-    }
-
-    /**
-     * An OkHttpClient that can be used to upload videos directly. This OkHttpClient will also be
-     * used to back the Retrofit interfaces
-     */
-    val muxHttpClient: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor {
-                Log.v("MuxDataDemos", it)
-            }.apply {
-                setLevel(HttpLoggingInterceptor.Level.BODY)
-            })
-            .build()
-    }
-
-    /**
-     * Basic-Auth Credential for authorizing the Mux Video API
-     */
-    val exampleVideoCredential =
-        Credentials.basic(BuildConfig.MUX_VIDEO_TOKEN_ID, BuildConfig.MUX_VIDEO_TOKEN_SECRET)
-
-    /**
      * Create a URL for HLS Playback based on the given playback ID
      *
      * see MuxVideoBackend for more information about assets and playback IDs
