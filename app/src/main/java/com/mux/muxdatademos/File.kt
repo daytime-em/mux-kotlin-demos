@@ -11,7 +11,7 @@ import java.io.File
  * the file has been fully uploaded.
  */
 fun File.asCountingFileBody(mediaType: MediaType?, callback: RequestBody.(Long) -> Unit): RequestBody {
-    return object : CountingFileBody(this@asCountingFileBody, mediaType, callback) {}
+    return CountingFileBody(this@asCountingFileBody, mediaType, callback)
 }
 
 /**
@@ -21,7 +21,7 @@ fun File.asCountingFileBody(mediaType: MediaType?, callback: RequestBody.(Long) 
 fun File.asCountingFileBody(contentType: String?, callback: RequestBody.(Long) -> Unit): RequestBody =
     asCountingFileBody(contentType?.toMediaType(), callback)
 
-private abstract class CountingFileBody constructor(
+private class CountingFileBody constructor(
     private val file: File,
     private val mediaType: MediaType?,
     private val callback: RequestBody.(Long) -> Unit,
@@ -41,7 +41,7 @@ private abstract class CountingFileBody constructor(
 
     override fun writeTo(sink: BufferedSink) {
         file.source().use {
-            var readBytes: Long = 0
+            var readBytes: Long
             do {
                 readBytes = it.read(sink.buffer, READ_LENGTH)
                 totalBytes += readBytes
