@@ -1,4 +1,4 @@
-package com.mux.muxdatademos.ingest
+package com.mux.muxuploaddemo.ingest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,12 +10,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import com.mux.muxdatademos.R
-import com.mux.muxdatademos.Util
-import com.mux.muxdatademos.VideoInfo
-import com.mux.muxdatademos.databinding.ActivityIngestVideoBinding
-import com.mux.muxdatademos.databinding.FragmentPlayerDialogBinding
 import com.mux.muxplayback.player.StaticExoPlayerFragment
+import com.mux.muxuploaddemo.R
+import com.mux.muxuploaddemo.Util
+import com.mux.muxuploaddemo.VideoInfo
+import com.mux.muxuploaddemo.databinding.ActivityIngestVideoBinding
+import com.mux.muxuploaddemo.databinding.FragmentPlayerDialogBinding
 import java.io.File
 
 class IngestVideoActivity : AppCompatActivity() {

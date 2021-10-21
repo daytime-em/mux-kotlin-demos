@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MuxDataDemos">
         <activity
-            android:name=".ingest.IngestVideoActivity"
+            android:name="com.mux.muxuploaddemo.ingest.IngestVideoActivity"
             android:exported="false" />
         <activity
             android:name=".StaticPlayerActivity"

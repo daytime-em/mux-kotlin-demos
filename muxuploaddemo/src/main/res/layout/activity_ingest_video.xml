@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".ingest.IngestVideoActivity">
+    tools:context="com.mux.muxuploaddemo.ingest.IngestVideoActivity">
 
     <FrameLayout
         android:id="@+id/ingest_video_thumbnail_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/player_height">
+        android:layout_height="@dimen/thumbnail_height">
 
         <ImageView
             android:id="@+id/ingest_video_thumbnail"

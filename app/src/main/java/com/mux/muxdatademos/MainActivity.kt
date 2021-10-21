@@ -13,7 +13,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.mux.muxdatademos.databinding.ActivityMainBinding
-import com.mux.muxdatademos.ingest.IngestVideoActivity
+import com.mux.muxuploaddemo.ingest.IngestVideoActivity
 import java.io.File
 
 class MainActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.mux.muxplayback.backend
+package com.mux.muxuploaddemo.backend
 
 /**
  * Represents a Mux Playback ID associated with an Asset

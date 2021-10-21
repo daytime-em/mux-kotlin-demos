@@ -12,3 +12,4 @@ dependencyResolutionManagement {
 rootProject.name = "MuxDataDemos"
 include ':app'
 include ':MuxVideoCommon'
+include ':muxuploaddemo'

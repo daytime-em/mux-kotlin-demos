@@ -1,14 +1,14 @@
-package com.mux.muxdatademos.ingest
+package com.mux.muxuploaddemo.ingest
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mux.muxdatademos.Util
-import com.mux.muxplayback.asCountingFileBody
-import com.mux.muxplayback.backend.MuxPlaybackPolicy
-import com.mux.muxplayback.backend.VideoUploadPost
+import com.mux.muxuploaddemo.Util
+import com.mux.muxuploaddemo.asCountingFileBody
+import com.mux.muxuploaddemo.backend.MuxPlaybackPolicy
+import com.mux.muxuploaddemo.backend.VideoUploadPost
 import kotlinx.coroutines.*
 import okhttp3.Request
 import java.io.File
