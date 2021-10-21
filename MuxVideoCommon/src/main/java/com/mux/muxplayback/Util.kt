@@ -1,4 +1,4 @@
-package com.mux.muxdatademos
+package com.mux.muxplayback
 
 import android.Manifest
 import android.content.Context
@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 
-object Util {
+internal object Util {
 
     /**
      * A Retrofit interface that can be used for interacting with the Mux Video backend

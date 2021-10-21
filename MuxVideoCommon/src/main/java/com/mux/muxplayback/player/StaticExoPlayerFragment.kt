@@ -1,22 +1,20 @@
-package com.mux.muxdatademos.exoplayer
+package com.mux.muxplayback.player
 
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.exoplayer2.C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.mux.muxdatademos.MuxDataConfigs
-import com.mux.muxdatademos.databinding.FragmentStaticExoplayerBinding
+import com.mux.muxplayback.MuxDataConfigs
+import com.mux.muxplayback.databinding.FragmentStaticExoplayerBinding
 import com.mux.stats.sdk.core.model.CustomerData
 import com.mux.stats.sdk.muxstats.MuxStatsExoPlayer
 

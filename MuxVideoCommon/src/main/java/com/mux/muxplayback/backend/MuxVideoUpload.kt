@@ -1,4 +1,4 @@
-package com.mux.muxdatademos.backend
+package com.mux.muxplayback.backend
 
 /**
  * Represents an active (or finished) video upload, connected with a recently-created asset

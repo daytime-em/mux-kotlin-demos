@@ -10,14 +10,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentTransaction
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.mux.muxdatademos.R
 import com.mux.muxdatademos.Util
 import com.mux.muxdatademos.VideoInfo
 import com.mux.muxdatademos.databinding.ActivityIngestVideoBinding
 import com.mux.muxdatademos.databinding.FragmentPlayerDialogBinding
-import com.mux.muxdatademos.exoplayer.StaticExoPlayerFragment
+import com.mux.muxplayback.player.StaticExoPlayerFragment
 import java.io.File
 
 class IngestVideoActivity : AppCompatActivity() {

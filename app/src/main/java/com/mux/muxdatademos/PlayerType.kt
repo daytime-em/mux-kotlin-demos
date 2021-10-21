@@ -3,7 +3,7 @@ package com.mux.muxdatademos
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.mux.muxdatademos.exoplayer.StaticExoPlayerFragment
+import com.mux.muxplayback.player.StaticExoPlayerFragment
 
 /**
  * Represents a player framework supported by Mux Data. Provides ViewHolders and Player Fragments

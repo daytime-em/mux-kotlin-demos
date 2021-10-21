@@ -1,4 +1,4 @@
-package com.mux.muxdatademos.backend
+package com.mux.muxplayback.backend
 
 /**
  * Represents the POST body for creating a new video asset.

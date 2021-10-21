@@ -1,4 +1,4 @@
-package com.mux.muxdatademos
+package com.mux.muxplayback
 
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType

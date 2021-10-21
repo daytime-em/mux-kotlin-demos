@@ -6,9 +6,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mux.muxdatademos.Util
-import com.mux.muxdatademos.asCountingFileBody
-import com.mux.muxdatademos.backend.MuxPlaybackPolicy
-import com.mux.muxdatademos.backend.VideoUploadPost
+import com.mux.muxplayback.asCountingFileBody
+import com.mux.muxplayback.backend.MuxPlaybackPolicy
+import com.mux.muxplayback.backend.VideoUploadPost
 import kotlinx.coroutines.*
 import okhttp3.Request
 import java.io.File
