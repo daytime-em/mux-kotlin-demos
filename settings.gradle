@@ -13,3 +13,4 @@ rootProject.name = "MuxDataDemos"
 include ':MuxExoPlayerDemo'
 include ':MuxVideoCommon'
 include ':MuxUploadDemo'
+include ':MuxJwPlayerDemo'
