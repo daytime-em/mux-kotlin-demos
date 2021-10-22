@@ -97,7 +97,7 @@ class StaticExoPlayerFragment : Fragment() {
             "mux_data_android_demo",
             CustomerData().apply {
                 customerPlayerData = CustomerPlayerData().apply {
-                    // Add or change properties here to customize player metadata such as ad configs,
+                    // Add or change properties here to customize player metadata such as ads,
                     //  experiments, etc
                     environmentKey = BuildConfig.MUX_DATA_ENV_KEY
                 }
