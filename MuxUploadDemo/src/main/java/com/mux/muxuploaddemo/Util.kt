@@ -1,4 +1,4 @@
-package com.mux.exoplayerdemo
+package com.mux.muxuploaddemo
 
 import android.Manifest
 import android.content.Context
@@ -8,7 +8,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import com.mux.exoplayerdemo.backend.MuxVideoBackend
+import com.mux.muxuploaddemo.backend.MuxVideoBackend
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -66,6 +66,14 @@ object Util {
             .putString("last_video_url", url).apply()
 
     /**
+     * Loads the last-uploaded video's URL from prefs for playback
+     */
+    fun loadLastRecordedVideoUrl(context: Context): String? =
+        context.getSharedPreferences("mux-prefs.xml", 0)
+            .getString("last_video_url", null)
+
+
+    /**
      * Saves the last-recorded video's file path to shared prefs
      */
     fun saveLastRecordedVideo(context: Context, videoFile: File) {
@@ -83,12 +91,8 @@ object Util {
 
     /**
      * Gets the directory where recorded/saved video files are stored. The file is on the device's
-     * external storage and should appear in the user's gallery
+     * external storage and should appear in the user's gallery in a folder.
      */
-    // TODO: Explain that it might be hard to grant URI permission for recording to internal storage
-    //  Or figure out a way and show that, or just suggest baking their own recording activity for
-    //  that functionality (For The Record: Getting the default Camera package probably isn't hard,
-    //  just mention that you have to always be matching the intent in .TakeVideo)
     fun getVideosDir(context: Context): File {
         val videoFile =
             File(context.getExternalFilesDir(Environment.DIRECTORY_MOVIES), "MuxDemos")

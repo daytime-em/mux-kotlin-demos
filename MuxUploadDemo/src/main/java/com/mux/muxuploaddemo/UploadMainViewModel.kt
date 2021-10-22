@@ -1,10 +1,10 @@
-package com.mux.muxdatademos
+package com.mux.muxuploaddemo
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import java.io.File
 
-class MainViewModel(stateHandle: SavedStateHandle): ViewModel() {
+class UploadMainViewModel(stateHandle: SavedStateHandle): ViewModel() {
 
     private val _recordedVideoFile = stateHandle.getLiveData<File>("recordedVideoFile")
     val recordedVideoFile get() = _recordedVideoFile

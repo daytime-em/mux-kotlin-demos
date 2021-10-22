@@ -1,4 +1,4 @@
-package com.mux.exoplayerdemo
+package com.mux.muxuploaddemo
 
 import org.junit.Test
 

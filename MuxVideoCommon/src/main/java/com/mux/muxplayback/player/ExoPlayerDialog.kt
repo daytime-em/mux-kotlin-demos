@@ -14,7 +14,7 @@ import com.mux.muxplayback.databinding.FragmentPlayerDialogBinding
  */
 class ExoPlayerDialog : DialogFragment() {
 
-    private val videoUrl: String get() = requireArguments().getString("video_info")!!
+    private val videoUrl: String get() = requireArguments().getString("video_url")!!
 
     override fun onCreateView(
         inflater: LayoutInflater,

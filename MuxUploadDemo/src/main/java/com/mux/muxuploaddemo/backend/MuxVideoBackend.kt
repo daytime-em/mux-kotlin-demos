@@ -1,6 +1,6 @@
-package com.mux.exoplayerdemo.backend
+package com.mux.muxuploaddemo.backend
 
-import com.mux.exoplayerdemo.Util
+import com.mux.muxuploaddemo.Util
 import retrofit2.http.*
 
 /**

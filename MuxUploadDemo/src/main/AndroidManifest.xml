@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mux.exoplayerdemo">
+    package="com.mux.muxuploaddemo">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MuxDataDemos">
         <activity
-            android:name="com.mux.exoplayerdemo.UploadMainActivity"
+            android:name="com.mux.muxuploaddemo.UploadMainActivity"
             android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -18,13 +23,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mux.exoplayerdemo.ingest.IngestVideoActivity"
+            android:name="com.mux.muxuploaddemo.ingest.IngestVideoActivity"
             android:exported="false"
             android:label="Mux Direct Upload Demo" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.mux.muxdatademos"
+            android:authorities="com.mux.muxuploaddemo"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
