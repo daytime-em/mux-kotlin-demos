@@ -6,6 +6,9 @@ dependencyResolutionManagement {
         maven {
             url "https://muxinc.jfrog.io/artifactory/default-maven-release-local"
         }
+        maven {
+            url 'https://mvn.jwplayer.com/content/repositories/releases/'
+        }
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
