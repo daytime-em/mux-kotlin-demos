@@ -12,9 +12,8 @@ android {
         versionCode 1
         versionName "1.0"
 
-        // TODO: If it's example code then pick different keys
-        // TODO: Recommend key-obfuscation? Specific strategies?
-        buildConfigField("String", "MUX_DATA_ENV_KEY", "\"l7oq6aojc9pqjuqv07s5a85cf\"")
+        // TODO: If it's example code then do like 'KEY HERE'
+        buildConfigField("String", "MUX_DATA_ENV_KEY", "\"rhhn9fph0nog346n4tqb6bqda\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

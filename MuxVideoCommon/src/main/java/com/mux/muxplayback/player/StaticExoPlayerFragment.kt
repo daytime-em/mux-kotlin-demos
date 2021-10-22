@@ -105,13 +105,17 @@ class StaticExoPlayerFragment : Fragment() {
                     // Add or change properties here to customize video metadata such as title,
                     //   language, etc
                     videoTitle = "Mux ExoPlayer Android Example"
+                    // Mux is not able to retrieve the URL of the video being played. It can be
+                    //   supplied via this property
+                    videoSourceUrl = videoUrl
                 }
                 customerViewData = CustomerViewData().apply {
                     // A a unique identifier for this View event
                     viewSessionId = UUID.randomUUID().toString()
                 }
                 customData = CustomData().apply {
-                    // Add values for your Custom Dimensions. Up to 5 strings can be set
+                    // Add values for your Custom Dimensions.
+                    // Up to 5 strings can be set to track your own data
                     customData1 = "Hello"
                     customData2 = "World"
                     customData3 = "From"
