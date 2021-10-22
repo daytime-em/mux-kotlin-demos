@@ -21,15 +21,16 @@ class ExoPlayerDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val viewBinding = FragmentPlayerDialogBinding.inflate(inflater)
+        return FragmentPlayerDialogBinding.inflate(inflater).root
+    }
 
-        val playerFragment = StaticExoPlayerFragment().apply {
-            arguments = bundleOf("video_url" to videoUrl)
-        }
-        childFragmentManager.beginTransaction()
-            .add(R.id.player_dialog_frag_container, playerFragment)
-            .commit()
+    override fun onStart() {
+        super.onStart()
 
-        return viewBinding.root
+        StaticExoPlayerFragment.addIfNotAdded(
+            childFragmentManager,
+            R.id.player_dialog_frag_container,
+            videoUrl
+        )
     }
 }

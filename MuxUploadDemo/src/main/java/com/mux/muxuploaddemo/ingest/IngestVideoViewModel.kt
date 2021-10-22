@@ -14,6 +14,7 @@ import okhttp3.Request
 import java.io.File
 import java.util.concurrent.atomic.AtomicReference
 
+
 /**
  * Uploads a video to Mux Video, creating an asset.
  *
@@ -70,7 +71,7 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
             start = CoroutineStart.LAZY,
             context = Dispatchers.IO + uploadExceptionHandler
         ) {
-            if(_state.value != State.DONE) {
+            if (_state.value != State.DONE) {
                 doUpload(videoFile)
             }
         }
@@ -120,8 +121,11 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
             .build()
 
         Util.muxHttpClient.newCall(request).execute().use { resp ->
-            if(!resp.isSuccessful) {
-                Log.e(javaClass.simpleName, "Failed to upload with error ${resp.code}:${resp.message}")
+            if (!resp.isSuccessful) {
+                Log.e(
+                    javaClass.simpleName,
+                    "Failed to upload with error ${resp.code}:${resp.message}"
+                )
                 _state.postValue(State.ERROR)
             } else {
                 Log.i(javaClass.simpleName, "Successfully uploaded file $videoFile to $url")
@@ -136,7 +140,7 @@ class IngestVideoViewModel(stateHandle: SavedStateHandle) : ViewModel() {
             delay(POLL_DELAY_MS)
             val uploadData = Util.muxVideoBackend.getUpload(uploadId = uploadId)
             Log.d(javaClass.simpleName, "Polled for upload data $uploadData")
-            when(uploadData.data.status) {
+            when (uploadData.data.status) {
                 "errored" -> {
                     Log.e(javaClass.simpleName, "Processing error for uploadId $uploadId")
                     throw Exception("Processing error for uploadId $uploadId")

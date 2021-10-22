@@ -2,19 +2,26 @@ package com.mux.muxuploaddemo
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Application
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.mux.muxplayback.player.ExoPlayerDialog
 import com.mux.muxuploaddemo.databinding.ActivityUploadMainBinding
 import com.mux.muxuploaddemo.ingest.IngestVideoActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 
 class UploadMainActivity : AppCompatActivity() {
@@ -35,8 +42,26 @@ class UploadMainActivity : AppCompatActivity() {
     private val ingestVideo =
         registerForActivityResult(ActivityResultContracts.CaptureVideo()) { success ->
             if (success) {
+                val videoFile = viewModel.recordedVideoFile.value!!
                 // !! safe if value was set before launching the camera app
-                Util.saveLastRecordedVideo(this, viewModel.recordedVideoFile.value!!)
+                Util.saveLastRecordedVideo(this, videoFile)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    // Add to the Device Gallery
+                    ContentValues().apply {
+                        put(MediaStore.Video.Media.TITLE, "Mux Upload Demo")
+                        put(MediaStore.Video.Media.MIME_TYPE, "video/mp4")
+                        if (Build.VERSION.SDK_INT < 29) {
+                            put(MediaStore.Video.Media.DATA, videoFile.absolutePath)
+                        } else {
+                            // DATA is now deprecated and cannot be written to
+                            put(MediaStore.Video.Media.RELATIVE_PATH, videoFile.path)
+                        }
+                         contentResolver.insert(
+                            MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                            this
+                        )
+                    }
+                }
                 Intent(this, IngestVideoActivity::class.java).let {
                     it.putExtra("input_file", viewModel.recordedVideoFile.value)
                     startActivity(it)
@@ -70,7 +95,7 @@ class UploadMainActivity : AppCompatActivity() {
             ExoPlayerDialog().apply {
                 arguments =
                     bundleOf("video_url" to Util.loadLastRecordedVideoUrl(this@UploadMainActivity))
-            }
+            }.show(supportFragmentManager, "player")
         }
 
         setContentView(binding.root)
@@ -114,6 +139,7 @@ class UploadMainActivity : AppCompatActivity() {
             arrayOf(
                 Manifest.permission.CAMERA,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
             )
         )
     }

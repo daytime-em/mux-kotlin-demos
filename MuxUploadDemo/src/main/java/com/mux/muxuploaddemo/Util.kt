@@ -109,15 +109,16 @@ object Util {
             context,
             Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
-        val hasStorage = ContextCompat.checkSelfPermission(
+        val hasReadStorage = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.READ_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
+        val hasWriteStorage = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
 
-        Log.d(javaClass.simpleName, "have videoRecordPermissions: camera $hasCamera")
-        Log.d(javaClass.simpleName, "have videoRecordPermissions: storage $hasStorage")
-
-        return hasCamera && hasStorage
+        return hasCamera && hasReadStorage && hasWriteStorage
     }
 
     private val gson by lazy {

@@ -11,6 +11,7 @@ import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
@@ -34,9 +35,9 @@ class StaticExoPlayerFragment : Fragment() {
     private val videoUrl: String get() = requireArguments().getString("video_url")!!
 
     companion object {
-        fun addIfNotAdded(activity: FragmentActivity, @IdRes containerId: Int, videoUrl: String) {
-            if (activity.supportFragmentManager.findFragmentById(containerId) == null) {
-                activity.supportFragmentManager.beginTransaction()
+        fun addIfNotAdded(fragmentManager: FragmentManager, @IdRes containerId: Int, videoUrl: String) {
+            if (fragmentManager.findFragmentById(containerId) == null) {
+                fragmentManager.beginTransaction()
                     .add(
                         containerId,
                         StaticExoPlayerFragment().apply {
@@ -120,7 +121,7 @@ class StaticExoPlayerFragment : Fragment() {
                     customData2 = "World"
                     customData3 = "From"
                     customData4 = "Mux"
-                    customData5 = "!"
+                    customData5 = "Data"
                 }
             }
         )

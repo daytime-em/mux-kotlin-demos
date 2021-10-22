@@ -16,6 +16,6 @@ class ExoMainActivity : AppCompatActivity() {
 
         // Replace this with any URL to collect stats for your video
         val mediaUrl = Util.createMuxHlsUrl("3FqPhJq8qXsqmIXPPKTjQa9005aT6HEUi0194BKYY27MA")
-        StaticExoPlayerFragment.addIfNotAdded(this, R.id.main_frag_container, mediaUrl)
+        StaticExoPlayerFragment.addIfNotAdded(supportFragmentManager, R.id.main_frag_container, mediaUrl)
     }
 }
