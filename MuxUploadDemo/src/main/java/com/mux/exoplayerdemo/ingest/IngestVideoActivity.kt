@@ -1,4 +1,4 @@
-package com.mux.muxuploaddemo.ingest
+package com.mux.exoplayerdemo.ingest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,8 +8,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import com.mux.muxplayback.player.ExoPlayerDialog
-import com.mux.muxuploaddemo.Util
-import com.mux.muxuploaddemo.databinding.ActivityIngestVideoBinding
+import com.mux.exoplayerdemo.Util
+import com.mux.exoplayerdemo.databinding.ActivityIngestVideoBinding
 import java.io.File
 
 class IngestVideoActivity : AppCompatActivity() {

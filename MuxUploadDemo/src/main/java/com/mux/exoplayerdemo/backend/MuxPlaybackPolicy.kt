@@ -1,4 +1,4 @@
-package com.mux.muxuploaddemo.backend
+package com.mux.exoplayerdemo.backend
 
 /**
  * Represents a playback policy for a Mux Asset.

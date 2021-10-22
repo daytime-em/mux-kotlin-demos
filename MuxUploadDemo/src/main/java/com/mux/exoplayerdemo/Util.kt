@@ -1,4 +1,4 @@
-package com.mux.muxuploaddemo
+package com.mux.exoplayerdemo
 
 import android.Manifest
 import android.content.Context
@@ -8,7 +8,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import com.mux.muxuploaddemo.backend.MuxVideoBackend
+import com.mux.exoplayerdemo.backend.MuxVideoBackend
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

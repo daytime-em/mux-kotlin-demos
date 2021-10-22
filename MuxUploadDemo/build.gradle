@@ -54,4 +54,5 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.3.6"
 
     implementation project(path: ':MuxVideoCommon')
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
 }

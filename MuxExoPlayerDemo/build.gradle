@@ -8,17 +8,15 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.mux.muxdatademos"
+        applicationId "com.mux.expoplayerdemo"
         minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
 
-        // TODO: If it's example code then pick different keys
+        // TODO: If it's example code then pick different keys?? This is on Emily's personal account
         // TODO: Recommend key-obfuscation? Specific strategies?
-        buildConfigField("String", "MUX_DATA_ENV_KEY", "\"l7oq6aojc9pqjuqv07s5a85cf\"")
-        buildConfigField("String", "MUX_VIDEO_TOKEN_ID", "\"dfe37927-79f7-41c6-ba67-c45325277226\"")
-        buildConfigField("String", "MUX_VIDEO_TOKEN_SECRET", "\"EYzB+EQoGp3ncY6DUNekeZICMA7f2MkK0gWFhpf1w0h4civdviefHTJHjOs6FhIUIeijU8q2d5e\"")
+        buildConfigField("String", "MUX_DATA_ENV_KEY", "\"rhhn9fph0nog346n4tqb6bqda\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

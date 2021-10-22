@@ -1,4 +1,4 @@
-package com.mux.muxuploaddemo.backend
+package com.mux.exoplayerdemo.backend
 
 /**
  * Represents an active (or finished) video upload, connected with a recently-created asset

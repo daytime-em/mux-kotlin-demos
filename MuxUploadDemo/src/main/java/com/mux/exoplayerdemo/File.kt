@@ -1,4 +1,4 @@
-package com.mux.muxuploaddemo
+package com.mux.exoplayerdemo
 
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
