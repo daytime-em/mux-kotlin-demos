@@ -20,6 +20,7 @@ class JwPlayerMainActivity : AppCompatActivity() {
 
     lateinit var rootView: View
     lateinit var playerView: JWPlayerView
+    lateinit var muxStats: MuxStatsJWPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class JwPlayerMainActivity : AppCompatActivity() {
             rootView.fitsSystemWindows = !it.fullscreen
         }
 
+        muxStats = createMuxStats(playerView)
         playerView.setup(createPlayerConfig(createPlaylist()))
     }
 
@@ -70,6 +72,7 @@ class JwPlayerMainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        muxStats.release()
         playerView.onDestroy()
 
         super.onDestroy()
