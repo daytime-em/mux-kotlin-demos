@@ -9,10 +9,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
 
-        // TODO: If it's example code then do like 'KEY HERE'
+      // TODO: If it's example code then do like 'KEY HERE'
         buildConfigField("String", "MUX_DATA_ENV_KEY", "\"rhhn9fph0nog346n4tqb6bqda\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

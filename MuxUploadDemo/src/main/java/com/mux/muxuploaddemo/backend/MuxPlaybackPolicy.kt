@@ -6,11 +6,11 @@ package com.mux.muxuploaddemo.backend
  * The default values are suitable for this example
  */
 data class MuxPlaybackPolicy(
-    /**
-     * Playback policy for the asset
-     * Possible Values:
-     * "pubilc"
-     * "signed"
-     */
-    val policy: String = "public"
+  /**
+   * Playback policy for the asset
+   * Possible Values:
+   * "pubilc"
+   * "signed"
+   */
+  val policy: String = "public"
 )

@@ -12,22 +12,19 @@
         android:layout_margin="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Video"
-        />
+        android:text="New Video" />
 
     <Button
         android:id="@+id/main_upload_last_video"
         android:layout_margin="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload Last Video"
-        />
+        android:text="Upload Last Video" />
 
     <Button
         android:id="@+id/main_play_last_video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play Last Video"
-        />
+        android:text="Play Last Video" />
 
 </LinearLayout>
