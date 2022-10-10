@@ -11,10 +11,7 @@ import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.mux.muxplayback.BuildConfig
 import com.mux.muxplayback.databinding.FragmentStaticExoplayerBinding
@@ -28,7 +25,7 @@ import java.util.*
 class StaticExoPlayerFragment : Fragment() {
 
   private lateinit var playerView: StyledPlayerView
-  private var exoPlayer: SimpleExoPlayer? = null
+  private var exoPlayer: ExoPlayer? = null
   private var muxStats: MuxStatsExoPlayer? = null
 
   private val videoUrl: String get() = requireArguments().getString("video_url")!!
@@ -88,19 +85,14 @@ class StaticExoPlayerFragment : Fragment() {
     super.onPause()
   }
 
-  private fun createMuxStats(player: SimpleExoPlayer): MuxStatsExoPlayer {
+  private fun createMuxStats(player: ExoPlayer): MuxStatsExoPlayer {
     // A SimpleExoPlayer is not strictly required, but if your ExoPlayer is a SimpleExoPlayer,
     //  additional metrics can be collected
     return MuxStatsExoPlayer(
       requireContext(),
+      BuildConfig.MUX_DATA_ENV_KEY,
       player,
-      "mux_data_android_demo",
       CustomerData().apply {
-        customerPlayerData = CustomerPlayerData().apply {
-          // Add or change properties here to customize player metadata such as ads,
-          //  experiments, etc
-          environmentKey = BuildConfig.MUX_DATA_ENV_KEY
-        }
         customerVideoData = CustomerVideoData().apply {
           // Add or change properties here to customize video metadata such as title,
           //   language, etc
@@ -126,11 +118,11 @@ class StaticExoPlayerFragment : Fragment() {
     )
   }
 
-  private fun createPlayer(): SimpleExoPlayer {
-    return SimpleExoPlayer.Builder(requireContext())
+  private fun createPlayer(): ExoPlayer {
+    return ExoPlayer.Builder(requireContext())
       .build().apply {
         addListener(object : Player.Listener {
-          override fun onPlayerError(error: ExoPlaybackException) {
+          override fun onPlayerError(error: PlaybackException) {
             Log.e(javaClass.simpleName, "Player Error", error)
             Toast.makeText(
               requireContext(),
