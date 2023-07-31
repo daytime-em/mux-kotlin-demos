@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.mux.muxjwplayerdemo"
         // JWPlayer's minSdk is 21 but the Mux library requires 24
         minSdk 24
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 

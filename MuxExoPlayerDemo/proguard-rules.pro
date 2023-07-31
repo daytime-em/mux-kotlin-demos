@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# I got the missing classes from missing_rules.txt and added the package names that created the problem here:
+#-keep class com.google.ads.interactivemedia.v3.api.** { *; }
+
+-dontwarn com.google.ads.interactivemedia.v3.api.**

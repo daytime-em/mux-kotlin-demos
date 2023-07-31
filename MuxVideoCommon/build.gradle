@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         minSdk 21
-        targetSdk 31
+        targetSdk 33
 
       // TODO: If it's example code then do like 'KEY HERE'
         buildConfigField("String", "MUX_DATA_ENV_KEY", "\"rhhn9fph0nog346n4tqb6bqda\"")
@@ -39,8 +39,8 @@ android {
 dependencies {
 
     // Support for ExoPlayer 2.15.x is coming soon
-    api "com.google.android.exoplayer:exoplayer:2.18.2"
-    api "com.mux.stats.sdk.muxstats:MuxExoPlayer_r2_18_1:3.1.0"
+    api "com.google.android.exoplayer:exoplayer:2.18.1"
+    api "com.mux.stats.sdk.muxstats:MuxExoPlayer_r2_18_1:dev-maint-gradle-8-a175ec2"
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
